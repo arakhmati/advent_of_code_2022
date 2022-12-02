@@ -4,7 +4,7 @@ use std::num::ParseIntError;
 use itertools::Itertools;
 
 #[allow(dead_code)]
-fn solution() -> Result<(u32, u32), ParseIntError> {
+fn solution(num_top_elfs: usize) -> Result<u32, ParseIntError> {
     let content = include_str!("input.txt");
 
     let lines = 
@@ -25,10 +25,8 @@ fn solution() -> Result<(u32, u32), ParseIntError> {
             })
         .try_collect()?;
 
-    let top_1 = calories_per_elf.iter().max().unwrap().clone();
-    let top_3_sum = calories_per_elf.iter().rev().take(3).fold(0, std::ops::Add::add);
-
-    Ok((top_1, top_3_sum))
+    let top_n_sum = calories_per_elf.iter().rev().take(num_top_elfs).fold(0, std::ops::Add::add);
+    Ok(top_n_sum)
 }
 
 #[cfg(test)]
@@ -36,8 +34,15 @@ mod tests {
     use crate::day1::*;
 
     #[test]
-    fn test_solution() {
-        let result = solution();
-        assert_eq!(result.unwrap(), (66719, 198551));
+    fn test_solution_part1() {
+        let result = solution(1);
+        assert_eq!(result.unwrap(), 66719);
+    }
+
+
+    #[test]
+    fn test_solution_part2() {
+        let result = solution(3);
+        assert_eq!(result.unwrap(), 198551);
     }
 }
