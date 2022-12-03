@@ -43,7 +43,10 @@ fn compute_your_hand_shape_part2(opponent: &HandShape, you: &str) -> HandShape {
     }
 }
 
-fn compute_score(game: (&str, &str), compute_your_hand_shape: fn(&HandShape, &str) -> HandShape) -> u32 {
+fn compute_score(
+    game: (&str, &str),
+    compute_your_hand_shape: fn(&HandShape, &str) -> HandShape,
+) -> u32 {
     let (opponent, you) = game;
 
     let opponent_hand_shape = match opponent {
@@ -62,8 +65,8 @@ fn compute_score(game: (&str, &str), compute_your_hand_shape: fn(&HandShape, &st
     };
 
     let game_score = match (opponent_hand_shape, your_hand_shape) {
-        (shape_a, shape_b) if shape_a.to_winning() == shape_b => 6,
-        (shape_a, shape_b) if shape_a.to_losing() == shape_b => 0,
+        (opponent, you) if opponent.to_winning() == you => 6,
+        (opponent, you) if opponent.to_losing() == you => 0,
         _ => 3,
     };
 
@@ -74,14 +77,12 @@ fn compute_score(game: (&str, &str), compute_your_hand_shape: fn(&HandShape, &st
 fn solution(compute_your_hand_shape: fn(&HandShape, &str) -> HandShape) -> u32 {
     let content = include_str!("input.txt");
 
-    let lines = 
-        content
-        .split("\n");
+    let lines = content.lines();
 
     let score = lines
-        .map(| line | line.split(" "))
-        .map(| mut split | (split.next().unwrap(), split.next().unwrap()) )
-        .map(| game | compute_score(game, compute_your_hand_shape))
+        .map(|line| line.split(" "))
+        .map(|mut split| (split.next().unwrap(), split.next().unwrap()))
+        .map(|game| compute_score(game, compute_your_hand_shape))
         .fold(0, std::ops::Add::add);
     score
 }
