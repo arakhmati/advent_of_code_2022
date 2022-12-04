@@ -30,7 +30,7 @@ fn solution(num_top_elfs: usize) -> Result<u32, ParseIntError> {
 
 #[cfg(test)]
 mod tests {
-    use crate::day1::*;
+    use super::*;
 
     #[test]
     fn test_solution_part1() {

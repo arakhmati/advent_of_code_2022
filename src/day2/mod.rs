@@ -89,7 +89,7 @@ fn solution(compute_your_hand_shape: fn(&HandShape, &str) -> HandShape) -> u32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::day2::*;
+    use super::*;
 
     #[test]
     fn test_solution_part1() {

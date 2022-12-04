@@ -62,7 +62,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::day3::*;
+    use super::*;
 
     #[test]
     fn test_solution_part1() {
